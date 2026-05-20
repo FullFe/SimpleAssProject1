@@ -1,7 +1,5 @@
 package org.example.app;
 
-
-
 import static org.example.ui.ConsoleUI.printMenu;
 import static org.example.ui.ConsoleUI.run;
 
