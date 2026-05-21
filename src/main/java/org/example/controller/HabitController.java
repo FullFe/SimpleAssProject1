@@ -2,6 +2,7 @@ package org.example.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.CreateHabitRequest;
 import org.example.model.Habit;
 import org.example.service.HabitService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class HabitController {
     private final HabitService habitService;
 
     @PostMapping()
-    public ResponseEntity<String> createHabit(@RequestParam String name){
+    public ResponseEntity<String> createHabit(@RequestBody CreateHabitRequest name){
         habitService.createHabit(name);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Привычка создана " + name);
