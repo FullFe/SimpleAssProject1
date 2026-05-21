@@ -1,11 +1,14 @@
 package org.example.model;
 
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class HabitDTO implements Serializable {
     final private String name;
+    @Setter
     private ArrayList<LocalDateTime> dates;
 
     public ArrayList<LocalDateTime> getDates() {
@@ -20,10 +23,6 @@ public class HabitDTO implements Serializable {
     public HabitDTO(String name) {
         this.name = name;
         this.dates = new ArrayList<>();
-    }
-
-    public void setDates(ArrayList<LocalDateTime> dates) {
-        this.dates = dates;
     }
 
 }
