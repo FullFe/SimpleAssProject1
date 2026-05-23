@@ -1,4 +1,4 @@
-package org.example.app.model;
+package org.example.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

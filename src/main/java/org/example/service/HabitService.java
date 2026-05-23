@@ -1,6 +1,6 @@
-package org.example.app.service;
+package org.example.service;
 
-import org.example.app.model.Habit;
+import org.example.model.Habit;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

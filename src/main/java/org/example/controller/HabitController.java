@@ -1,10 +1,10 @@
-package org.example.app.controller;
+package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.app.dto.HabitRequest;
-import org.example.app.dto.HabitResponse;
-import org.example.app.model.Habit;
-import org.example.app.service.HabitService;
+import org.example.dto.HabitRequest;
+import org.example.dto.HabitResponse;
+import org.example.model.Habit;
+import org.example.service.HabitService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

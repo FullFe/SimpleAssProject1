@@ -1,4 +1,4 @@
-package org.example.app.dto;
+package org.example.dto;
 
 import lombok.Getter;
 
