@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.app.model;
 
 import lombok.Setter;
 
