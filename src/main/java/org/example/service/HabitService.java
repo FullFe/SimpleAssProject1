@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.Habit;
+import org.example.repository.HabitRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -8,30 +9,42 @@ import java.util.*;
 @Service
 public class HabitService {
 
-    private final Map<String, Habit> habits = new HashMap<>();
+    private final HabitRepository habitRepository;
+
+    public HabitService(HabitRepository habitRepository) {
+        this.habitRepository = habitRepository;
+    }
 
     public void createHabit(String name) {
-        habits.put(name, new Habit(name));
+        Habit habit = new Habit(name);
+        habitRepository.save(habit);
     }
 
     public boolean deleteHabit(String name) {
-        return habits.remove(name) != null;
+        Optional<Habit> habit = habitRepository.findByName(name);
+        if (habit.isPresent()) {
+            habitRepository.delete(habit.get());
+            return true;
+        }
+        return false;
     }
 
     public boolean checkHabit(String name) {
-        Habit habit = habits.get(name);
-        if (habit != null) {
+        Optional<Habit> optionalHabit = habitRepository.findByName(name);
+        if (optionalHabit.isPresent()) {
+            Habit habit = optionalHabit.get();
             habit.addCheckpoint();
+            habitRepository.save(habit);
             return true;
         }
         return false;
     }
 
     public List<Habit> getAllHabits() {
-        return new ArrayList<>(habits.values());
+        return habitRepository.findAll();
     }
 
     public Habit getHabit(String name) {
-        return habits.get(name);
+        return habitRepository.findByName(name).orElse(null);
     }
 }
