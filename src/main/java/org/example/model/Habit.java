@@ -1,34 +1,47 @@
 package org.example.model;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Habit{
-    final private String name;
-    final private ArrayList<LocalDateTime> dates;
+@Getter
+@Entity
+@Table(name = "habits")
+public class Habit {
 
-    public ArrayList<LocalDateTime> getDates() {
-        return dates;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public String getName() {
-        return name;
-    }
+    @Column(nullable = false, unique = true)
+    private String name;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "checkpoints",
+            joinColumns = @JoinColumn(name = "habit_id")
+    )
+    @Column(name = "check_date")
+    private List<LocalDateTime> dates;
+
+    public Habit() {}
 
     public Habit(String name) {
         this.name = name;
-        this.dates = new ArrayList<>();
+        dates = new ArrayList<>();
     }
 
-    public Habit(String name, ArrayList<LocalDateTime> dates) {
-        this.name = name;
-        this.dates = dates;
+    public void addCheckpoint(){
+        dates.add(LocalDateTime.now());
     }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Habit habit = (Habit) o;
         return Objects.equals(name, habit.name);
@@ -38,24 +51,4 @@ public class Habit{
     public int hashCode() {
         return Objects.hash(name);
     }
-
-    @Override
-    public String toString() {
-        return "Habit{" +
-                "name='" + name + '\'' +
-                ", dates=" + dates +
-                "}\n";
-    }
-
-    public void addCheckpoint(){
-        dates.add(LocalDateTime.now());
-    }
-
-    public void deleteCheckpoint(int i){
-        if(i <= dates.size() - 1){
-            dates.remove(i);
-        }
-    }
-
-
 }
