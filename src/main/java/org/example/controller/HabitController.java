@@ -3,10 +3,10 @@ package org.example.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
-import org.example.dto.HabitErrorResponse;
 import org.example.dto.HabitRequest;
 import org.example.dto.HabitResponse;
 import org.example.dto.HabitSuccessResponse;
+import org.example.exception.HabitNotFoundException;
 import org.example.model.Habit;
 import org.example.service.HabitService;
 import org.springframework.http.HttpStatus;
@@ -42,8 +42,7 @@ public class HabitController {
         if (habitService.checkHabit(name)) {
             return ResponseEntity.ok("Привычка отмечена: " + name);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Ошибка! Привычка '" + name + "' не найдена");
+        throw new HabitNotFoundException("Ошибка! Привычка '" + name + "' не найдена");
     }
 
     @Transactional
@@ -53,8 +52,7 @@ public class HabitController {
         if (habitService.deleteHabit(name)) {
             return ResponseEntity.ok("Привычка удалена: " + name);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Ошибка! Привычка '" + name + "' не найдена");
+        throw new HabitNotFoundException("Ошибка! Привычка '" + name + "' не найдена");
     }
 
     @Transactional(readOnly = true)
@@ -74,8 +72,7 @@ public class HabitController {
     public ResponseEntity<? extends HabitResponse> getHabit(@Pattern(regexp = "^[А-Яа-яёЁ]+$", message = "Только русские буквы") @PathVariable String name) {
         Habit habit = habitService.getHabit(name);
         if (habit == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new HabitErrorResponse("Ошибка! Привычка '" + name + "' не найдена"));
+            throw new HabitNotFoundException("Ошибка! Привычка '" + name + "' не найдена");
         }
         return ResponseEntity.ok(toResponse(habit));
     }
