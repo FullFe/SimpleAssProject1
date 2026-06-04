@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.dto.HabitRequest;
+import org.example.dto.habitRequestNResponses.HabitRequest;
 import org.example.model.Habit;
 import org.example.service.HabitService;
 import org.junit.jupiter.api.Test;

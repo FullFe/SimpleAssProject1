@@ -1,4 +1,4 @@
-package org.example.dto;
+package org.example.dto.habitRequestNResponses;
 
 import lombok.Getter;
 

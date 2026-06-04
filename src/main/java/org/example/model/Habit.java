@@ -28,6 +28,10 @@ public class Habit {
     @Column(name = "check_date")
     private List<LocalDateTime> dates;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Habit() {}
 
     public Habit(String name) {

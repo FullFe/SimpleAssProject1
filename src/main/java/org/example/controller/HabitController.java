@@ -3,9 +3,9 @@ package org.example.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
-import org.example.dto.HabitRequest;
-import org.example.dto.HabitResponse;
-import org.example.dto.HabitSuccessResponse;
+import org.example.dto.habitRequestNResponses.HabitRequest;
+import org.example.dto.habitRequestNResponses.HabitResponse;
+import org.example.dto.habitRequestNResponses.HabitSuccessResponse;
 import org.example.exception.HabitNotFoundException;
 import org.example.model.Habit;
 import org.example.service.HabitService;
@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/habits")
 @RequiredArgsConstructor
-@Validated //Эти ошибки выбрасывают исключения и нужно сделать их обработчик
+@Validated
 public class HabitController {
 
     private final HabitService habitService;
