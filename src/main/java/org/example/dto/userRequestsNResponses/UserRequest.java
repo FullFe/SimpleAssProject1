@@ -1,4 +1,4 @@
-package org.example.dto.userRequests;
+package org.example.dto.userRequestsNResponses;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;

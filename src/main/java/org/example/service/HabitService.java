@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.Habit;
+import org.example.model.User;
 import org.example.repository.HabitRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +16,14 @@ public class HabitService {
         this.habitRepository = habitRepository;
     }
 
-    public void createHabit(String name) {
+    public void createHabit(String name, User user) {
         Habit habit = new Habit(name);
+        habit.setUser(user);
         habitRepository.save(habit);
     }
 
-    public boolean deleteHabit(String name) {
-        Optional<Habit> habit = habitRepository.findByName(name);
+    public boolean deleteHabit(String name, User user) {
+        Optional<Habit> habit = habitRepository.findByNameAndUser(name, user);
         if (habit.isPresent()) {
             habitRepository.delete(habit.get());
             return true;
@@ -29,8 +31,8 @@ public class HabitService {
         return false;
     }
 
-    public boolean checkHabit(String name) {
-        Optional<Habit> optionalHabit = habitRepository.findByName(name);
+    public boolean checkHabit(String name, User user) {
+        Optional<Habit> optionalHabit = habitRepository.findByNameAndUser(name, user);
         if (optionalHabit.isPresent()) {
             Habit habit = optionalHabit.get();
             habit.addCheckpoint();
@@ -40,11 +42,11 @@ public class HabitService {
         return false;
     }
 
-    public List<Habit> getAllHabits() {
-        return habitRepository.findAll();
+    public List<Habit> getAllHabits(User user) {
+        return habitRepository.findByUser(user);
     }
 
-    public Habit getHabit(String name) {
-        return habitRepository.findByName(name).orElse(null);
+    public Habit getHabit(String name, User user) {
+        return habitRepository.findByNameAndUser(name, user).orElse(null);
     }
 }

@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.dto.userRequests.UserRequest;
+import org.example.dto.userRequestsNResponses.UserRequest;
 import org.example.model.Rights;
 import org.example.model.User;
 import org.example.repository.UserRepository;
@@ -20,8 +20,9 @@ public class UserService {
     public void createUser(UserRequest request){
         User user = new User(request.getLogin(), request.getPass());
         if (request.getRights() != null){
-            user.setRights(Rights.valueOf(request.getRights()));
+            user.setRole(Rights.valueOf(request.getRights()));
         }
+
         userRepository.save(user);
     }
 
@@ -34,16 +35,16 @@ public class UserService {
         }
     }
 
-    public User getUser(UserRequest request){
-        return userRepository.findByLogin(request.getLogin()).orElse(null);
-    }
+//    public User getUser(UserRequest request){
+//        return userRepository.findByLogin(request.getLogin()).orElse(null);
+//    }
 
     public void updateUser(UserRequest request){
         Optional<User> optionalUser = userRepository.findByLogin(request.getLogin());
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
             if (request.getRights() != null){
-                user.setRights(Rights.valueOf(request.getRights()));
+                user.setRole(Rights.valueOf(request.getRights()));
             }
             userRepository.save(user);
         }
